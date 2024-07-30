@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "127248413518",
+    "project_id": "oswal-pump-8d88d",
+    "storage_bucket": "oswal-pump-8d88d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127248413518:android:cfffd12dd3d184343e241f",
+        "android_client_info": {
+          "package_name": "com.solar.oswal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD69IPEAry9PFd5d4PV_Zu_yNwvx2GfEVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
