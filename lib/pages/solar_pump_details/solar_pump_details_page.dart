@@ -64,7 +64,7 @@ class SolarDetailPageState extends State<SolarDetailPage> {
                           spec?.specificationSerialData ?? [];
 
                       return Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(10),
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 8),
                         width: double.infinity,
@@ -198,7 +198,7 @@ class SolarDetailPageState extends State<SolarDetailPage> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white,

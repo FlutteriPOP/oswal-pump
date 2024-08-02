@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:oswal/pages/widgets/tost_widget.dart';
 import 'package:oswal/utils/apis.dart';
 
 import '../model/getdown_detail_model.dart';
@@ -56,6 +57,7 @@ class GodownDetailController extends GetxController {
           log('Unexpected response format: ${response.data}');
         }
       } else {
+        showToast('Something went wrong');
         errorMessage.value = 'Error: ${response.statusCode}';
         log('HTTP Error: ${response.statusCode} - ${response.data}');
       }
