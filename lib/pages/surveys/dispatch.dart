@@ -57,7 +57,7 @@ class DispatchPage extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             SitePhoto(
-              title: 'Upload Material Dispached Receipt',
+              title: 'Upload Material Dispatched Receipt',
               onTap: () {
                 log('Tapped on Site Photo');
               },

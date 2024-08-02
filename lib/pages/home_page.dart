@@ -10,7 +10,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarWidget(title: 'Pumps', showLeading: false),
+      appBar: const AppbarWidget(
+        title: 'Pumps',
+        showLeading: false,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
@@ -91,8 +94,7 @@ class HomePage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.9),
+                  color: Theme.of(context).colorScheme.onSurface,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(

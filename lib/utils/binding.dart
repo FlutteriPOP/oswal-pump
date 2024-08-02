@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controller/asset_mapping_controller.dart';
 import '../controller/dropdown_controller.dart';
+import '../controller/getgodown_controller.dart';
+import '../controller/godown_detail_controller.dart';
 import '../controller/ic_photo_controller.dart';
 import '../controller/login_controller.dart';
 import '../controller/search_controller.dart';
@@ -15,5 +18,9 @@ class AllBinding extends Bindings {
         fenix: true);
     Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
     Get.lazyPut<IcPhotoController>(() => IcPhotoController(), fenix: true);
+    Get.lazyPut<GetgodownController>(() => GetgodownController(), fenix: true);
+    Get.lazyPut<SearchController>(() => SearchController(), fenix: true);
+    Get.lazyPut<GodownDetailController>(() => GodownDetailController(),
+        fenix: true);
   }
 }

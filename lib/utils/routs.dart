@@ -53,12 +53,12 @@ class AppRouts {
     ),
     GetPage(
       name: search,
-      page: () => const SearchPage(),
+      page: () =>  const SearchPage(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: solarDetails,
-      page: () => const SolarDetailPage(),
+      page: () =>  const SolarDetailPage(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

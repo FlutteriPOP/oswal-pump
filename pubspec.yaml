@@ -22,7 +22,8 @@ dependencies:
   dio: ^5.5.0+1
   firebase_core: ^3.2.0
   firebase_messaging: ^15.0.3
-
+  http: ^1.2.2
+  logger: ^2.4.0
 
 
 dev_dependencies:

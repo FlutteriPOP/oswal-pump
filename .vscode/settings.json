@@ -3,11 +3,17 @@
     "appbar",
     "cupertino",
     "fluttertoast",
+    "getdown",
+    "getgodown",
     "Getx",
+    "HDPE",
     "oswal",
     "Roboto",
     "SWPS"
   ],
   "java.compile.nullAnalysis.mode": "automatic",
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "cSpell.enableFiletypes": [
+    "dart"
+  ]
 }

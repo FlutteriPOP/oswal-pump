@@ -5,23 +5,40 @@ import 'package:get/get.dart';
 import 'package:oswal/theme/color.dart';
 import 'package:oswal/utils/routs.dart';
 
+import '../../controller/search_controller.dart';
+import '../../model/search_model.dart';
+
 class SolarIdPage extends StatelessWidget {
-  const SolarIdPage({super.key});
+  final SearchBarController searchController = Get.find();
+  SolarIdPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _customContainerData(context),
-        const SizedBox(height: 20),
-        RefreshIndicator(
+    return Obx(() {
+      if (searchController.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      if (searchController.searchResults.value == null) {
+        return const Center(child: Text('No data available'));
+      }
+
+      final searchResults = searchController.searchResults.value!;
+      return Column(
+        children: [
+          _customContainerData(context, searchResults),
+          const SizedBox(height: 20),
+          RefreshIndicator(
             onRefresh: () => Future.delayed(const Duration(seconds: 2)),
-            child: _customContainerProcess(context)),
-      ],
-    );
+            child: _customContainerProcess(context),
+          ),
+        ],
+      );
+    });
   }
 
-  Widget _customContainerData(BuildContext context) {
+  Widget _customContainerData(
+      BuildContext context, FarmerDetailsModel searchResults) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       decoration: BoxDecoration(
@@ -38,15 +55,21 @@ class SolarIdPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _itemRow(context, icon: Icons.description_rounded, text: 'Name'),
-          _itemRow(context, icon: Icons.person_2_rounded, text: 'John Doe'),
+          _itemRow(
+            context,
+            icon: Icons.description_rounded,
+            text: searchResults.applicationNo,
+          ),
           _itemRow(context,
-              icon: Icons.phone_android_outlined, text: '+919999999999'),
+              icon: Icons.person_2_rounded, text: searchResults.farmerName),
           _itemRow(context,
-              icon: Icons.location_on,
-              text: '12020 Paschero, Province of Cuneo, Italy'),
+              icon: Icons.phone_android_outlined, text: searchResults.mobile),
           _itemRow(context,
-              icon: Icons.table_view_outlined, text: 'HP DC, Surface'),
+              icon: Icons.location_on, text: searchResults.locVillage),
+          _itemRow(context,
+              icon: Icons.table_view_outlined,
+              text:
+                  '${searchResults.irrigationMode} - ${searchResults.waterDepthFt} ft - ${searchResults.sourceOfWater}'),
         ],
       ),
     );
@@ -60,7 +83,6 @@ class SolarIdPage extends StatelessWidget {
         Icon(icon, color: Theme.of(context).colorScheme.onSurface, size: 25),
         const SizedBox(width: 10),
         Expanded(
-          // Added Expanded to handle long text
           child: Text(
             text,
             maxLines: 2,

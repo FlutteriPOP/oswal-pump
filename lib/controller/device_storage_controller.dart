@@ -12,7 +12,6 @@ class DeviceController extends GetxController {
   void onInit() {
     super.onInit();
     loadDeviceId();
-    
   }
 
   void saveDeviceId(String id) {
@@ -29,6 +28,13 @@ class DeviceController extends GetxController {
     final storedId = _storageService.read<String>('device_id');
     if (storedId != null) {
       deviceId.value = storedId;
+    }
+  }
+
+  void loadUserId() {
+    final storedId = _storageService.read<String>('user_id');
+    if (storedId != null) {
+      userId.value = storedId;
     }
   }
 }

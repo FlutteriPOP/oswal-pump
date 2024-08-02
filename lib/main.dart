@@ -7,8 +7,8 @@ import 'package:oswal/theme/theme.dart';
 import 'package:oswal/utils/message.dart';
 import 'package:oswal/utils/routs.dart';
 
-import 'utils/binding.dart';
 import 'firebase_options.dart';
+import 'utils/binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +18,7 @@ void main() async {
   await GetStorage.init();
 
   // Initialize Firebase API
-  await FirebaseApi().init(); 
+  await FirebaseApi().init();
 
   runApp(const MyApp());
 }
@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
       getPages: AppRouts.routes,
       initialBinding: AllBinding(),
       initialRoute: AppRouts.initialRoute,
-      home:
-          const LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

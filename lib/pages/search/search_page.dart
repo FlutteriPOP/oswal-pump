@@ -12,7 +12,10 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SearchBarController searchBarController = Get.find();
+    final controller = TextEditingController();
+    final searchBarController = Get.find<SearchBarController>();
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: const AppbarWidget(title: 'Search'),
       body: SingleChildScrollView(
@@ -21,15 +24,43 @@ class SearchPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              _textForm(context, 'Search Farmer : Mobile, App No',
-                  searchBarController),
+              TextFormField(
+                cursorColor: theme.colorScheme.onSurface,
+                controller: controller,
+                // onChanged: searchBarController.updateSearchText,
+                decoration: InputDecoration(
+                  hintText: 'Search Farmer : Mobile, APP No',
+                  hintStyle: TextStyle(color: theme.colorScheme.onSurface),
+                  border: _outlineInputBorder(theme.colorScheme.onSurface),
+                  enabledBorder:
+                      _outlineInputBorder(theme.colorScheme.onSurface),
+                  focusedBorder:
+                      _outlineInputBorder(theme.colorScheme.onSurface),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      // controller.clear();
+                      searchBarController.updateSearchText('');
+                    },
+                    child: Container(
+                      height: 55,
+                      width: 65,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: theme.colorScheme.onSurface,
+                      ),
+                      child: const Icon(
+                        Icons.search,
+                        color: primaryColorLight,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
-              Obx(() {
-                if (searchBarController.searchText.isNotEmpty) {
-                  return const SolarIdPage();
-                }
-                return const CustomContainer();
-              }),
+              Obx(() => searchBarController.searchText.isNotEmpty
+                  ? SolarIdPage()
+                  : const CustomContainer()),
               const SizedBox(height: 20),
             ],
           ),
@@ -38,54 +69,10 @@ class SearchPage extends StatelessWidget {
     );
   }
 
-  Widget _textForm(BuildContext context, String hintText,
-      SearchBarController searchBarController) {
-    final color = Theme.of(context).colorScheme.onSurface;
-
-    return TextFormField(
-      cursorColor: color,
-      onChanged: (value) {
-        searchBarController.updateSearchText(value);
-      },
-      style: TextStyle(color: color),
-      decoration: _inputDecoration(context, hintText, color),
-    );
-  }
-
-  InputDecoration _inputDecoration(
-      BuildContext context, String hintText, Color color) {
-    return InputDecoration(
-      hintText: hintText,
-      hintStyle: TextStyle(color: color),
-      border: _outlineInputBorder(color),
-      enabledBorder: _outlineInputBorder(color),
-      focusedBorder: _outlineInputBorder(color),
-      suffixIcon: _searchIcon(context, color),
-    );
-  }
-
   OutlineInputBorder _outlineInputBorder(Color color) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(50),
       borderSide: BorderSide(color: color, width: 2),
-    );
-  }
-
-  Widget _searchIcon(BuildContext context, Color color) {
-    return SizedBox(
-      height: 55,
-      width: 65,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: color,
-        ),
-        child: const Icon(
-          Icons.search,
-          color: primaryColorLight,
-          size: 30,
-        ),
-      ),
     );
   }
 }

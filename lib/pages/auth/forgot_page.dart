@@ -9,8 +9,22 @@ import '../widgets/button_circuler_widget.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/mtext_form.dart';
 
-class ForgotPage extends StatelessWidget {
+class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});
+
+  @override
+  ForgotPageState createState() => ForgotPageState();
+}
+
+class ForgotPageState extends State<ForgotPage> {
+  final TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +58,32 @@ class ForgotPage extends StatelessWidget {
   }
 
   Widget _buildTextFields(BuildContext context) {
-    final emailController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
-
     return Form(
       key: formKey,
       child: Column(
         children: [
           MyTextForm(
             controller: emailController,
-            labelText: 'Mobile/Email/Username',
+            labelText: 'Username',
             leadingIcon: Icon(
               Icons.person,
               color: Theme.of(context).colorScheme.primary,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email/';
-              }
-              if (!GetUtils.isEmail(value)) {
-                return 'Please enter a valid email';
+                return 'Please enter your username';
               }
               return null;
             },
           ),
           const SizedBox(height: 5),
-          _buildSubmitButton(context, formKey, emailController),
+          _buildSubmitButton(context),
         ],
       ),
     );
   }
 
-  Widget _buildSubmitButton(BuildContext context, GlobalKey<FormState> formKey,
-      TextEditingController emailController) {
+  Widget _buildSubmitButton(BuildContext context) {
     ForgotController forgotController = Get.find<ForgotController>();
 
     return Obx(

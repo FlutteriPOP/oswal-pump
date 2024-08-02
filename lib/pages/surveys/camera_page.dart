@@ -17,11 +17,9 @@ class _CameraPageState extends State<CameraPage> {
   void initState() {
     super.initState();
     setupCamera();
-    
   }
 
   Future<void> setupCamera() async {
-
     _cameras = await availableCameras();
     if (_cameras.isNotEmpty) {
       _cameraController = CameraController(_cameras[0], ResolutionPreset.high);

@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
               passwordController: passwordController,
               passwordFocusNode: passwordFocusNode,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             _buildLoginButton(
               context: context,
               formKey: formKey,

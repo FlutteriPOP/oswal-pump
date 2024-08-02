@@ -40,21 +40,35 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         log('Login successful!');
+        log('Response data type: ${response.data.runtimeType}');
         log('Response data: ${response.data}');
 
         final responseData = response.data;
 
-        // Safeguard against null values
-        final userId = responseData['data']?[0]['user_id']?.toString() ?? '';
+        if (responseData is Map && responseData['data'] is List) {
+          final dataList = responseData['data'] as List;
 
-        if (userId.isNotEmpty) {
-          deviceController.saveUserId(userId);
-          showToast('Login successful!');
-          Get.offAllNamed(AppRouts.home);
-          log('User ID: $userId');
+          if (dataList.isNotEmpty && dataList[0] is Map<String, dynamic>) {
+            final firstData = dataList[0] as Map<String, dynamic>;
+
+            final userId = firstData['user_id']?.toString() ?? '';
+
+            if (userId.isNotEmpty) {
+              deviceController.saveUserId(userId);
+              showToast('Login successful!');
+              Get.offAllNamed(AppRouts.home);
+              log('User ID: $userId');
+            } else {
+              showToast('User ID is missing in response');
+              log('User ID is missing in response data');
+            }
+          } else {
+            showToast('Invalid data format in response');
+            log('Invalid data format in response data');
+          }
         } else {
-          showToast('User ID is missing in response');
-          log('User ID is missing in response data');
+          showToast('Invalid data format in response');
+          log('Invalid data format in response data');
         }
       } else {
         showToast(response.data['message'] ?? 'Login failed');
