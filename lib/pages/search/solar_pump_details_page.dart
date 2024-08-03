@@ -122,9 +122,9 @@ class SolarDetailPageState extends State<SolarDetailPage> {
                                             .primaryColor
                                             .withOpacity(0.4)),
                                     children: [
-                                      _tableCell('Model Name', isHeader: true),
                                       _tableCell('Serial Number',
                                           isHeader: true),
+                                      _tableCell('Model Name', isHeader: true),
                                       _tableCell('Current Status',
                                           isHeader: true),
                                       _tableCell('Supplier Name',
@@ -143,15 +143,15 @@ class SolarDetailPageState extends State<SolarDetailPage> {
                                               .primaryColor
                                               .withOpacity(0.1)),
                                       children: [
+                                        _tableCell(
+                                            serialData.serialNo?.isEmpty ?? true
+                                                ? 'N/A'
+                                                : serialData.serialNo!),
                                         _tableCell(serialData
                                                     .assetModelName?.isEmpty ??
                                                 true
                                             ? 'N/A'
                                             : serialData.assetModelName!),
-                                        _tableCell(
-                                            serialData.serialNo?.isEmpty ?? true
-                                                ? 'N/A'
-                                                : serialData.serialNo!),
                                         _tableCell(
                                             serialData.status?.isEmpty ?? true
                                                 ? 'N/A'

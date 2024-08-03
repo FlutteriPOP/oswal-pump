@@ -15,13 +15,13 @@ class SolarIdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (searchController.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
-      }
+      // if (searchController.isLoading.value) {
+      //   return const Center(child: CircularProgressIndicator());
+      // }
 
-      if (searchController.searchResults.value == null) {
-        return const Center(child: Text('No data available'));
-      }
+      // if (searchController.searchResults.value == null) {
+      //   return const Center(child: Text('No data available'));
+      // }
 
       final searchResults = searchController.searchResults.value!;
       return Column(

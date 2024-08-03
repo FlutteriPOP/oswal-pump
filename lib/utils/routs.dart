@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oswal/controller/forgot_controller.dart';
 import 'package:oswal/pages/search/search_page.dart';
-import 'package:oswal/pages/solar_pump_details/solar_pump_details_page.dart';
+import 'package:oswal/pages/search/solar_pump_details_page.dart';
 import 'package:oswal/pages/splash_page.dart';
 import 'package:oswal/pages/surveys/camera_page.dart';
 import 'package:oswal/pages/surveys/site_survey.dart';

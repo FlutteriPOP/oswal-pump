@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oswal/controller/search_controller.dart';
@@ -27,9 +29,11 @@ class SearchPage extends StatelessWidget {
               TextFormField(
                 cursorColor: theme.colorScheme.onSurface,
                 controller: controller,
-                // onChanged: searchBarController.updateSearchText,
+                // onChanged: (text) {
+                //   searchBarController.updateSearchText(text);
+                // },
                 decoration: InputDecoration(
-                  hintText: 'Search Farmer : Mobile, APP No',
+                  hintText: 'Search Farmer: Mobile, APP No',
                   hintStyle: TextStyle(color: theme.colorScheme.onSurface),
                   border: _outlineInputBorder(theme.colorScheme.onSurface),
                   enabledBorder:
@@ -38,8 +42,14 @@ class SearchPage extends StatelessWidget {
                       _outlineInputBorder(theme.colorScheme.onSurface),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      // controller.clear();
-                      searchBarController.updateSearchText('');
+                      final searchText = controller.text;
+                      if (searchText.isNotEmpty) {
+                        log('Search text is not empty');
+                        searchBarController.updateSearchText(searchText);
+                      } else {
+                        log('Search text is empty');
+                        searchBarController.searchResults.value = null;
+                      }
                     },
                     child: Container(
                       height: 55,
@@ -58,9 +68,15 @@ class SearchPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Obx(() => searchBarController.searchText.isNotEmpty
-                  ? SolarIdPage()
-                  : const CustomContainer()),
+              Obx(() {
+                if (searchBarController.isLoading.value) {
+                  return const CircularProgressIndicator();
+                } else if (searchBarController.searchResults.value != null) {
+                  return SolarIdPage();
+                } else {
+                  return const CustomContainer();
+                }
+              }),
               const SizedBox(height: 20),
             ],
           ),
