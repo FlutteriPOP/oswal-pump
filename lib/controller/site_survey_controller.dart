@@ -31,6 +31,4 @@ class SiteSurveyController extends GetxController {
   }
 
   // getting location from api
-
-  // Future<void> getlocation() async {}
 }
