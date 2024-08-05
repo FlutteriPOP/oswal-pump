@@ -38,13 +38,7 @@ class IcPhotosPage extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            const BasicDetailsWidget(
-              pumpNumber: 'SWPS/2023/0073',
-              personName: 'MAMAN CHAND',
-              phoneNumber: '9999999999',
-              address: 'Putthi Mangalkhan(136),HISAR',
-              description: '3 HP DC, Surface',
-            ),
+            const BasicDetailsWidget(),
             const SizedBox(height: 20),
             _customQuestion(context, 'Is Installation Completed?'),
             const SizedBox(height: 10),

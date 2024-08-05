@@ -5,8 +5,8 @@ import '../../controller/getgodown_controller.dart';
 import '../../model/getgodown_model.dart';
 import '../../utils/routs.dart';
 
-class CustomContainer extends StatelessWidget {
-  const CustomContainer({super.key});
+class InstallerDetails extends StatelessWidget {
+  const InstallerDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

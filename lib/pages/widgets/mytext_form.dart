@@ -14,6 +14,8 @@ class MyTextForm extends StatelessWidget {
   final IconButton? suffixIcon;
   final bool enabled;
   final List<String>? autofillHints;
+  final TextEditingController? textEditingController;
+
 
   const MyTextForm({
     super.key,
@@ -29,7 +31,7 @@ class MyTextForm extends StatelessWidget {
     this.leadingIcon,
     this.suffixIcon,
     this.enabled = true,
-    this.autofillHints,
+    this.autofillHints, this.textEditingController,
   });
 
   @override

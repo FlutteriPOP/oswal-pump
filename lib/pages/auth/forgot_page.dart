@@ -7,7 +7,7 @@ import 'package:oswal/pages/widgets/appbar_widget.dart';
 
 import '../widgets/button_circuler_widget.dart';
 import '../widgets/custom_button.dart';
-import '../widgets/mtext_form.dart';
+import '../widgets/mytext_form.dart';
 
 class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});

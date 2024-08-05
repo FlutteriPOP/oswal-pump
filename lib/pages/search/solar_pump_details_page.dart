@@ -39,7 +39,11 @@ class SolarDetailPageState extends State<SolarDetailPage> {
         if (controller.data.isEmpty ||
             controller.data[0].data == null ||
             controller.data[0].data!.isEmpty) {
-          return const Center(child: Text('No data available'));
+          return Center(
+              child: Text(
+            'No data available',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ));
         }
 
         return ListView.builder(

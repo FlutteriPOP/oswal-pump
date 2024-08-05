@@ -20,11 +20,7 @@ class AssetMappingPage extends StatelessWidget {
         child: Column(
           children: [
             const BasicDetailsWidget(
-              pumpNumber: 'SWPS/2023/0073',
-              personName: 'MAMAN CHAND',
-              phoneNumber: '+919999999999',
-              address: 'Putthi Mangalkhan(136),HISAR',
-              description: '3 HP DC, Surface',
+             
             ),
             const SizedBox(height: 15),
             _buildScannerSection(

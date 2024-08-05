@@ -6,8 +6,8 @@ import 'package:oswal/controller/search_controller.dart';
 
 import '../../theme/color.dart';
 import '../widgets/appbar_widget.dart';
-import 'custom_container_widget.dart';
-import 'solar_id_page.dart';
+import 'installer_details.dart';
+import 'farmer_detail_page.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -42,9 +42,8 @@ class SearchPage extends StatelessWidget {
                       _outlineInputBorder(theme.colorScheme.onSurface),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      final searchText = controller.text;
+                      final searchText = controller.text.trim();
                       if (searchText.isNotEmpty) {
-                        log('Search text is not empty');
                         searchBarController.updateSearchText(searchText);
                       } else {
                         log('Search text is empty');
@@ -72,9 +71,9 @@ class SearchPage extends StatelessWidget {
                 if (searchBarController.isLoading.value) {
                   return const CircularProgressIndicator();
                 } else if (searchBarController.searchResults.value != null) {
-                  return SolarIdPage();
+                  return FarmerDetailPage();
                 } else {
-                  return const CustomContainer();
+                  return const InstallerDetails();
                 }
               }),
               const SizedBox(height: 20),

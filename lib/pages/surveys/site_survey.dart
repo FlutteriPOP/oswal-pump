@@ -2,16 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oswal/controller/dropdown_controller.dart';
-import 'package:oswal/pages/widgets/appbar_widget.dart';
-import 'package:oswal/pages/widgets/basic_details_widget.dart';
-import 'package:oswal/pages/widgets/custom_button.dart';
-import 'package:oswal/pages/widgets/site_photo_widget.dart';
-import 'package:oswal/utils/routs.dart';
 
+import '../../controller/site_survey_controller.dart';
+import '../../controller/location_controller.dart';
 import '../../theme/color.dart';
+import '../../utils/routs.dart';
+import '../widgets/appbar_widget.dart';
+import '../widgets/basic_details_widget.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/dropdown_widget.dart';
-import '../widgets/mtext_form.dart';
+import '../widgets/mytext_form.dart';
+import '../widgets/site_photo_widget.dart';
 
 class SiteSurveyPage extends StatelessWidget {
   const SiteSurveyPage({super.key});
@@ -28,60 +29,54 @@ class SiteSurveyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const BasicDetailsWidget(
-              pumpNumber: 'pumpNumber',
-              personName: 'personName',
-              phoneNumber: 'phoneNumber',
-              address: 'address',
-              description: 'description',
+              isShow: true,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             _locationDetails(context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             _pumpDetails(context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             _otherDetails(context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             SitePhoto(
-              
               title: 'Site Photo',
               onTap: () {
                 Get.toNamed(AppRouts.camera);
                 log('Tapped on Site Photo');
               },
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             SitePhoto(
-              photoUrls: const [
-                'https://picsum.photos/200',
-                'https://picsum.photos/100',
-                'https://picsum.photos/300',
-                'https://picsum.photos/400',
-                'https://picsum.photos/id/1/200'
-              ],
+              photoUrls: const [],
               title: 'Consent Form',
               onTap: () {
                 log('Tapped on Site Photo');
               },
-
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             SitePhoto(
               title: 'Declaration Form',
               onTap: () {
                 log('Tapped on Declaration Form');
               },
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             SitePhoto(
               title: 'Land Paper Form',
               onTap: () {
                 log('Tapped on Site Photo');
               },
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             CustomButton(
+              child: Text(
+                'Submit',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: Colors.white),
+              ),
               onPressed: () => log('Tapped on Submit'),
-            
             ),
           ],
         ),
@@ -91,7 +86,13 @@ class SiteSurveyPage extends StatelessWidget {
 }
 
 Widget _locationDetails(BuildContext context) {
-  final DropdownController dropdownController = Get.find();
+  TextEditingController latitudeController = TextEditingController();
+  TextEditingController longitudeController = TextEditingController();
+  final LocationController locationController = Get.put(LocationController());
+
+  latitudeController.text = locationController.latitude.toString();
+  longitudeController.text = locationController.longitude.toString();
+  final SiteSurveyController dropdownController = Get.find();
   return DetailsContainer(
     title: 'Location Details - Hariyana',
     children: [
@@ -139,6 +140,7 @@ Widget _locationDetails(BuildContext context) {
         height: 10,
       ),
       MyTextForm(
+          controller: latitudeController,
           enabled: false,
           labelText: 'Latitude',
           suffixIcon: IconButton(
@@ -149,6 +151,7 @@ Widget _locationDetails(BuildContext context) {
             ),
           )),
       MyTextForm(
+          controller: longitudeController,
           enabled: false,
           labelText: 'Longitude',
           suffixIcon: IconButton(
@@ -167,7 +170,8 @@ Widget _locationDetails(BuildContext context) {
 }
 
 Widget _pumpDetails(BuildContext context) {
-  final DropdownController dropdownController = Get.put(DropdownController());
+  final SiteSurveyController dropdownController =
+      Get.put(SiteSurveyController());
   return DetailsContainer(
     title: 'Pump Details',
     children: [
@@ -230,7 +234,8 @@ Widget _pumpDetails(BuildContext context) {
 }
 
 Widget _otherDetails(BuildContext context) {
-  final DropdownController dropdownController = Get.put(DropdownController());
+  final SiteSurveyController dropdownController =
+      Get.put(SiteSurveyController());
   return DetailsContainer(
     title: 'Other Details',
     children: [

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class DropdownController extends GetxController {
+class SiteSurveyController extends GetxController {
   // Dropdown values for different dropdowns
   RxString selectedTehsil = 'Select Tehsil'.obs;
   RxString selectedVillage = 'Select Village'.obs;
@@ -29,4 +29,8 @@ class DropdownController extends GetxController {
   void setBlock(String value) {
     selectedBlock.value = value;
   }
+
+  // getting location from api
+
+  // Future<void> getlocation() async {}
 }
