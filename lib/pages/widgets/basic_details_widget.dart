@@ -14,6 +14,7 @@ class BasicDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SearchBarController searchController = Get.put(SearchBarController());
+
     return Obx(() {
       final farmerDetail = searchController.searchResults.value;
 

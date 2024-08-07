@@ -30,7 +30,7 @@ class FirebaseApi {
 
         String? token = await messaging.getToken();
         if (token != null) {
-          deviceController.saveDeviceId(token);
+          deviceController.saveDeviceToken(token);
           log('Token retrieved: $token');
         } else {
           log('Failed to retrieve token');

@@ -19,9 +19,9 @@ class GetgodownController extends GetxController {
   }
 
   Future<void> getGodown() async {
-    deviceController.loadDeviceId();
+    deviceController.loadDevToken();
     deviceController.loadUserId();
-    final token = deviceController.deviceId.value;
+    final token = deviceController.deviceToken.value;
     final userId = deviceController.userId.value;
 
     isLoading.value = true;

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oswal/theme/color.dart';
 
-class CustomDropdown extends StatelessWidget {
-  final RxString selectedValue;
-  final List<String> items;
+class CustomDropdown<T> extends StatelessWidget {
+  final Rx<T?> selectedValue;
+  final List<T> items;
   final String label;
-  final void Function(String?) onChanged;
+  final String Function(T) itemLabel;
+  final void Function(T?) onChanged;
 
   const CustomDropdown({
     super.key,
     required this.selectedValue,
     required this.items,
+    required this.itemLabel,
     required this.onChanged,
     required this.label,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Ensure unique items and check if selected value exists
     final uniqueItems = items.toSet().toList();
 
     return Obx(() {
-      return DropdownButtonFormField<String>(
+      return DropdownButtonFormField<T>(
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
@@ -52,21 +52,14 @@ class CustomDropdown extends StatelessWidget {
           label,
           style: const TextStyle(color: Colors.grey),
         ),
-        items: uniqueItems.map((String item) {
-          return DropdownMenuItem<String>(
+        items: uniqueItems.map((T item) {
+          return DropdownMenuItem<T>(
             value: item,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    item,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: primaryColor,
-                        ),
-                    overflow: TextOverflow.ellipsis,
+            child: Text(
+              itemLabel(item),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
                   ),
-                ),
-              ],
             ),
           );
         }).toList(),

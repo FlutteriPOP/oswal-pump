@@ -11,11 +11,11 @@ import '../pages/widgets/tost_widget.dart';
 class LoginController extends GetxController {
   final DeviceController deviceController = Get.find();
   final Dio dio = Dio();
-  final RxBool isObsecure = true.obs;
+  final RxBool isObscure = true.obs;
   final RxBool isLoading = false.obs;
 
   void toggleVisibility() {
-    isObsecure.value = !isObsecure.value;
+    isObscure.value = !isObscure.value;
   }
 
   Future<void> login({
@@ -23,7 +23,7 @@ class LoginController extends GetxController {
     required String password,
     String? token,
   }) async {
-    final deviceToken = deviceController.deviceId.value;
+    final deviceToken = deviceController.deviceToken.value;
 
     final data = {
       'username': email,

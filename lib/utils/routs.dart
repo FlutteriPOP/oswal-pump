@@ -4,7 +4,7 @@ import 'package:oswal/pages/search/search_page.dart';
 import 'package:oswal/pages/search/solar_pump_details_page.dart';
 import 'package:oswal/pages/splash_page.dart';
 import 'package:oswal/pages/surveys/camera_page.dart';
-import 'package:oswal/pages/surveys/site_survey.dart';
+import 'package:oswal/pages/surveys/site_survey_page.dart';
 
 import '../pages/auth/forgot_page.dart';
 import '../pages/auth/login_page.dart';
@@ -53,12 +53,12 @@ class AppRouts {
     ),
     GetPage(
       name: search,
-      page: () =>  const SearchPage(),
+      page: () => const SearchPage(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: solarDetails,
-      page: () =>  const SolarDetailPage(),
+      page: () => const SolarDetailPage(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

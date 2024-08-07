@@ -24,7 +24,7 @@ class GodownDetailController extends GetxController {
   }
 
   void fetchData() async {
-    final token = deviceController.deviceId.value;
+    final token = deviceController.deviceToken.value;
     final userId = deviceController.userId.value;
 
     final requestData = {

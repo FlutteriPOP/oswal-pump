@@ -151,18 +151,18 @@ class _LoginPageState extends State<LoginPage> {
         ),
         suffixIcon: IconButton(
           icon: Icon(
-            loginController.isObsecure.value
+            loginController.isObscure.value
                 ? Icons.visibility_off
                 : Icons.visibility,
             color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             loginController.toggleVisibility();
-            log('Password visibility toggled: ${loginController.isObsecure.value}');
+            log('Password visibility toggled: ${loginController.isObscure.value}');
           },
         ),
         autofillHints: const [AutofillHints.password],
-        obscureText: loginController.isObsecure.value,
+        obscureText: loginController.isObscure.value,
         focusNode: passwordFocusNode,
         validator: (value) {
           if (value == null || value.isEmpty) {
