@@ -28,9 +28,9 @@ class BlockModel {
 
 class Block {
   Block({
-    required this.blockId,
-    required this.blockCode,
-    required this.blockName,
+    this.blockId,
+    this.blockCode,
+    this.blockName,
   });
 
   final String? blockId;

@@ -28,9 +28,9 @@ class DistrictModel {
 
 class Datum {
   Datum({
-    required this.districtId,
-    required this.districtCode,
-    required this.districtName,
+    this.districtId,
+    this.districtCode,
+    this.districtName,
   });
 
   final String? districtId;

@@ -28,9 +28,9 @@ class VillageModel {
 
 class Village {
   Village({
-    required this.villageId,
-    required this.villageCode,
-    required this.villageName,
+    this.villageId,
+    this.villageCode,
+    this.villageName,
   });
 
   final String? villageId;

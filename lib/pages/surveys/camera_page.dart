@@ -6,7 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oswal/controller/location_controller.dart';
-import 'package:oswal/pages/widgets/appbar_widget.dart';
+import 'package:oswal/controller/search_controller.dart';
 
 import 'display_image_page.dart';
 
@@ -83,9 +83,6 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarWidget(
-        title: 'Camera',
-      ),
       body: _buildUI(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _onCapturePressed,
@@ -97,6 +94,13 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _buildUI() {
+    final SearchBarController searchBarController = Get.find();
+    final LocationController locationController = Get.find();
+
+    DateTime now = DateTime.now();
+
+    final data = searchBarController.searchResults.value;
+
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return const Center(child: CircularProgressIndicator());
     } else {
@@ -105,13 +109,12 @@ class _CameraPageState extends State<CameraPage> {
           Positioned.fill(
             child: CameraPreview(_cameraController!),
           ),
-          // Add additional widgets like location information here if needed
           Positioned(
             bottom: 80,
             left: 10,
             right: 10,
             child: Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(10),
@@ -119,23 +122,26 @@ class _CameraPageState extends State<CameraPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Assuming these are managed via a location controller
                   Text(
-                    'Latitude: ${Get.find<LocationController>().latitude}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
+                      '${data?.applicationNo ?? 'N/A'} - ${data?.farmerName ?? 'N/A'}',
+                      style: const TextStyle(color: Colors.white)),
+                  // Assuming these are managed via a location controller`
                   Text(
-                    'Longitude: ${_locationController.longitude}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    'Accuracy: ${_locationController.accuracy}',
+                    'Latitude: ${locationController.latitude}, Longitude: ${locationController.longitude}',
                     style: const TextStyle(color: Colors.white),
                   ),
                   Text(
                     'Location Name: ${_locationController.locationName}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Accuracy: ${_locationController.accuracy.split('.').first}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Date & Time: ${now.toString()}',
                     style: const TextStyle(color: Colors.white),
                   ),
                 ],

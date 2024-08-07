@@ -21,8 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    // Acess Permission
-
     requestPermission();
   }
 
@@ -71,8 +69,8 @@ class _LoginPageState extends State<LoginPage> {
     final emailFocusNode = FocusNode();
     final passwordFocusNode = FocusNode();
 
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    final emailController = TextEditingController(text: 'AMAN');
+    final passwordController = TextEditingController(text: 'Ama@4852');
 
     final formKey = GlobalKey<FormState>();
 

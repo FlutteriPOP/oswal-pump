@@ -19,57 +19,67 @@ class CustomDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Remove duplicates while preserving order
     final uniqueItems = items.toSet().toList();
 
     return Obx(() {
-      return DropdownButtonFormField<T>(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide(
-              color: Colors.blueGrey.shade300,
+      return DropdownButtonHideUnderline(
+        child: DropdownButtonFormField<T>(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(
+                color: Colors.blueGrey.shade300,
+              ),
             ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primary,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primary,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
+            labelText: label,
+            labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
-          labelText: label,
-          labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+          value: uniqueItems.contains(selectedValue.value)
+              ? selectedValue.value
+              : null,
+          hint: Text(
+            label,
+            style: const TextStyle(color: Colors.grey),
+          ),
+          items: uniqueItems.map((T item) {
+            return DropdownMenuItem<T>(
+              value: item,
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: 200, // Set max width for dropdown items
+                ),
+                child: Text(
+                  itemLabel(item),
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+              ),
+            );
+          }).toList(),
+          onChanged: (value) {
+            if (value != null) {
+              onChanged(value);
+            }
+          },
+          isExpanded: true,
+          dropdownColor: Theme.of(context).colorScheme.surface,
         ),
-        value: uniqueItems.contains(selectedValue.value)
-            ? selectedValue.value
-            : null,
-        hint: Text(
-          label,
-          style: const TextStyle(color: Colors.grey),
-        ),
-        items: uniqueItems.map((T item) {
-          return DropdownMenuItem<T>(
-            value: item,
-            child: Text(
-              itemLabel(item),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-            ),
-          );
-        }).toList(),
-        onChanged: (value) {
-          if (value != null) {
-            onChanged(value);
-          }
-        },
-        isExpanded: true,
-        dropdownColor: Theme.of(context).colorScheme.surface,
       );
     });
   }

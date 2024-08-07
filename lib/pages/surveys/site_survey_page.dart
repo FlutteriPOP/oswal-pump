@@ -6,7 +6,6 @@ import 'package:oswal/model/block_model.dart';
 import 'package:oswal/model/district_model.dart';
 import 'package:oswal/model/tehsil_model.dart';
 import 'package:oswal/model/village_model.dart';
-import 'package:oswal/pages/widgets/dropdown_widget.dart';
 
 import '../../controller/location_controller.dart';
 import '../../controller/site_survey_controller.dart';
@@ -15,6 +14,8 @@ import '../../utils/routs.dart';
 import '../widgets/appbar_widget.dart';
 import '../widgets/basic_details_widget.dart';
 import '../widgets/custom_button.dart';
+import '../widgets/dropdown_widget.dart';
+import '../widgets/my_circular_widget.dart';
 import '../widgets/mytext_form.dart';
 import '../widgets/site_photo_widget.dart';
 
@@ -23,7 +24,7 @@ class SiteSurveyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SiteSurveyController dropdownController =
+    final SiteSurveyController siteSurveyController =
         Get.find<SiteSurveyController>();
 
     return Scaffold(
@@ -32,13 +33,10 @@ class SiteSurveyPage extends StatelessWidget {
       ),
       body: Obx(() {
         // Use Obx to listen for changes in loading state
-        if (dropdownController.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.blue.withOpacity(0.1),
-              color: Theme.of(context)
-                  .colorScheme
-                  .primary, // Optional: set the color
+        if (siteSurveyController.isLoading.value) {
+          return const Center(
+            child: MyCircularProgressWidget(
+              loadingMessage: 'Please wait...',
             ),
           );
         }
@@ -59,6 +57,13 @@ class SiteSurveyPage extends StatelessWidget {
               _otherDetails(context),
               const SizedBox(height: 20),
               SitePhoto(
+                photoUrls: const [
+                  'https://cdn2.thecatapi.com/images/2vr.jpg',
+                  'https://cdn2.thecatapi.com/images/4gm.gif',
+                  'https://cdn2.thecatapi.com/images/6lh.jpg',
+                  'https://cdn2.thecatapi.com/images/73d.jpg',
+                  'https://cdn2.thecatapi.com/images/cbj.jpg'
+                ],
                 title: 'Site Photo',
                 onTap: () {
                   Get.toNamed(AppRouts.camera);
@@ -67,7 +72,13 @@ class SiteSurveyPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               SitePhoto(
-                photoUrls: const [],
+                photoUrls: const [
+                  'https://cdn2.thecatapi.com/images/2vr.jpg',
+                  'https://cdn2.thecatapi.com/images/4gm.gif',
+                  'https://cdn2.thecatapi.com/images/6lh.jpg',
+                  'https://cdn2.thecatapi.com/images/73d.jpg',
+                  'https://cdn2.thecatapi.com/images/cbj.jpg'
+                ],
                 title: 'Consent Form',
                 onTap: () {
                   log('Tapped on Site Photo');
@@ -75,6 +86,13 @@ class SiteSurveyPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               SitePhoto(
+                photoUrls: const [
+                  'https://cdn2.thecatapi.com/images/2vr.jpg',
+                  'https://cdn2.thecatapi.com/images/4gm.gif',
+                  'https://cdn2.thecatapi.com/images/6lh.jpg',
+                  'https://cdn2.thecatapi.com/images/73d.jpg',
+                  'https://cdn2.thecatapi.com/images/cbj.jpg'
+                ],
                 title: 'Declaration Form',
                 onTap: () {
                   log('Tapped on Declaration Form');
@@ -82,6 +100,13 @@ class SiteSurveyPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               SitePhoto(
+                photoUrls: const [
+                  'https://cdn2.thecatapi.com/images/2vr.jpg',
+                  'https://cdn2.thecatapi.com/images/4gm.gif',
+                  'https://cdn2.thecatapi.com/images/6lh.jpg',
+                  'https://cdn2.thecatapi.com/images/73d.jpg',
+                  'https://cdn2.thecatapi.com/images/cbj.jpg'
+                ],
                 title: 'Land Paper Form',
                 onTap: () {
                   log('Tapped on Site Photo');
@@ -108,10 +133,10 @@ class SiteSurveyPage extends StatelessWidget {
 
 Widget _locationDetails(BuildContext context) {
   final LocationController locationController = Get.find<LocationController>();
-  final SiteSurveyController dropdownController =
+
+  final SiteSurveyController siteSurveyController =
       Get.find<SiteSurveyController>();
 
-  // Initialize controllers with initial values from the LocationController
   TextEditingController latitudeController = TextEditingController(
     text: locationController.latitude.toString(),
   );
@@ -120,7 +145,8 @@ Widget _locationDetails(BuildContext context) {
   );
 
   return DetailsContainer(
-    title: 'Location Details - Hariyana',
+    title: 'Location Details - ',
+    subtitle: 'Hariyana',
     children: [
       Divider(
         color: Theme.of(context).colorScheme.primary,
@@ -128,70 +154,77 @@ Widget _locationDetails(BuildContext context) {
       ),
       const SizedBox(height: 10),
       CustomDropdown<Datum>(
-        selectedValue: dropdownController.selectedDistrict,
-        items: dropdownController.districtList,
+        selectedValue: siteSurveyController.selectedDistrict,
+        items: siteSurveyController.districtList,
         itemLabel: (datum) => datum.districtName ?? 'Unknown',
         label: 'Select District',
         onChanged: (Datum? newValue) {
           if (newValue != null) {
-            dropdownController.selectedDistrict.value = newValue;
-            dropdownController.clearDependentDropdowns();
-            dropdownController.getTehsil(newValue.districtCode ?? '');
-            dropdownController.getBlock(newValue.districtCode ?? '');
+            siteSurveyController.selectedDistrict.value = newValue;
+            siteSurveyController.clearDependentDropdowns();
+            siteSurveyController.getTehsil(newValue.districtCode ?? '');
+            siteSurveyController.getBlock(newValue.districtCode ?? '');
+            log('Selected district: ${newValue.districtName}');
           } else {
-            dropdownController.clearDependentDropdowns();
+            siteSurveyController.clearDependentDropdowns();
+            log('No district selected');
           }
         },
       ),
       const SizedBox(height: 20),
       CustomDropdown<Tehsil>(
-        label: 'Tehsil',
-        selectedValue: dropdownController.selectedTehsil,
-        items: dropdownController.tehsilList,
+        label: 'Select Tehsil',
+        selectedValue: siteSurveyController.selectedTehsil,
+        items: siteSurveyController.tehsilList,
         itemLabel: (tehsil) => tehsil.tehsilName ?? 'Unknown',
         onChanged: (Tehsil? newValue) {
           if (newValue != null) {
-            dropdownController.selectedTehsil.value = newValue;
-            dropdownController.clearBlockAndVillage();
-            dropdownController.getTehsil(
-              dropdownController.selectedDistrict.value?.districtCode ?? '',
-            );
+            siteSurveyController.selectedTehsil.value = newValue;
+            siteSurveyController.clearBlockAndVillage();
+            siteSurveyController.getBlock(
+                siteSurveyController.selectedDistrict.value?.districtCode ??
+                    '');
+            log('Selected tehsil: ${newValue.tehsilName}');
           } else {
-            dropdownController.clearBlockAndVillage();
+            siteSurveyController.clearBlockAndVillage();
+            log('No tehsil selected');
           }
         },
       ),
       const SizedBox(height: 20),
       CustomDropdown<Block>(
-        label: 'Block',
-        selectedValue: dropdownController.selectedBlock,
-        items: dropdownController.blockList,
+        label: 'Select Block',
+        selectedValue: siteSurveyController.selectedBlock,
+        items: siteSurveyController.blockList,
         itemLabel: (block) => block.blockName ?? 'Unknown',
         onChanged: (Block? newValue) {
           if (newValue != null) {
-            dropdownController.selectedBlock.value = newValue;
-            dropdownController.getBlock(newValue.blockCode ?? '');
-            dropdownController.clearVillages();
+            siteSurveyController.selectedBlock.value = newValue;
+            siteSurveyController.clearVillages();
+            siteSurveyController.getVillage(
+              siteSurveyController.selectedDistrict.value?.districtCode ?? '',
+              siteSurveyController.selectedTehsil.value?.tehsilCode ?? '',
+            );
+            log('Selected block: ${newValue.blockName}');
           } else {
-            dropdownController.clearVillages();
+            siteSurveyController.clearVillages();
+            log('No block selected');
           }
         },
       ),
       const SizedBox(height: 20),
       CustomDropdown<Village>(
-        label: 'Village',
-        selectedValue: dropdownController.selectedVillage,
-        items: dropdownController.villageList,
+        label: 'Select Village',
+        selectedValue: siteSurveyController.selectedVillage,
+        items: siteSurveyController.villageList,
         itemLabel: (village) => village.villageName ?? 'Unknown',
         onChanged: (Village? newValue) {
           if (newValue != null) {
-            dropdownController.selectedVillage.value = newValue;
-            dropdownController.getVillage(
-                dropdownController.selectedDistrict.value?.districtCode ?? '',
-                dropdownController.selectedTehsil.value?.tehsilCode ?? '');
-            dropdownController.clearVillages();
+            siteSurveyController.selectedVillage.value = newValue;
+            log('Selected village: ${newValue.villageName}');
           } else {
-            dropdownController.clearVillages();
+            siteSurveyController.clearVillages();
+            log('No village selected');
           }
         },
       ),
@@ -222,14 +255,18 @@ Widget _locationDetails(BuildContext context) {
       ),
       const MyTextForm(labelText: 'Survey Number'),
       const MyTextForm(labelText: 'Killa Number'),
-      const MyTextForm(labelText: 'Land Coverage Area (Sq.Meter)'),
-      const MyTextForm(labelText: 'Water Depth Level (ft.)'),
+      const MyTextForm(
+          keyboardType: TextInputType.number,
+          labelText: 'Land Coverage Area (Sq.Meter)'),
+      const MyTextForm(
+          keyboardType: TextInputType.number,
+          labelText: 'Water Depth Level (ft.)'),
     ],
   );
 }
 
 Widget _pumpDetails(BuildContext context) {
-  final SiteSurveyController dropdownController =
+  final SiteSurveyController siteSurveyController =
       Get.find<SiteSurveyController>();
   return DetailsContainer(
     title: 'Pump Details',
@@ -241,53 +278,102 @@ Widget _pumpDetails(BuildContext context) {
       const SizedBox(
         height: 15,
       ),
-      // CustomDropdown(
-      //   label: 'Pump Capacity (Hp)',
-      //   selectedValue: dropdownController.selectedDistrict,
-      //   items: dropdownController.selectedDistrict,
-      //   onChanged: (newValue) => dropdownController.selectedDistrict(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Pump Capacity (HP)',
+        selectedValue: siteSurveyController.selectedPumpCapacity,
+        items: siteSurveyController.pumpCapacity,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedPumpCapacity.value =
+                newValue; // Removed the extra dot
+            log('Selected pump capacity: ${siteSurveyController.selectedPumpCapacity.value}');
+          } else {
+            // If needed, add a method to handle cases when no value is selected
+            log('No pump capacity selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Pump Type',
-      //   selectedValue: dropdownController.selectedTehsil,
-      //   items: dropdownController.tehsil,
-      //   onChanged: (newValue) => dropdownController.selectedTehsil(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Pump Type',
+        selectedValue: siteSurveyController.selectedPumpType,
+        items: siteSurveyController.pumpType,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedPumpType.value =
+                newValue; // Removed the extra dot
+            log('Selected pump Type: ${siteSurveyController.selectedPumpType.value}');
+          } else {
+            log('No pump Type selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Pump Sub Type',
-      //   selectedValue: dropdownController.selectedVillage,
-      //   items: dropdownController.village,
-      //   onChanged: (newValue) => dropdownController.selectedVillage(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Pump Sub Type',
+        selectedValue: siteSurveyController.selectedPumpSubType,
+        items: siteSurveyController.pumpSubType,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedPumpSubType.value =
+                newValue; // Removed the extra dot
+            log('Selected pump SubType: ${siteSurveyController.selectedPumpSubType.value}');
+          } else {
+            log('No pump SubType selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Pump Category',
-      //   selectedValue: dropdownController.selectedBlock,
-      //   items: dropdownController.block,
-      //   onChanged: (newValue) => dropdownController.selectedBlock(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Pump Category',
+        selectedValue: siteSurveyController.selectedPumpCategory,
+        items: siteSurveyController.pumpCategory,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedPumpCategory.value =
+                newValue; // Removed the extra dot
+            log('Selected pump Category: ${siteSurveyController.selectedPumpCategory.value}');
+          } else {
+            log('No pump Category selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Controller Type',
-      //   selectedValue: dropdownController.selectedBlock,
-      //   items: dropdownController.block,
-      //   onChanged: (newValue) => dropdownController.selectedBlock(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Controller Type',
+        selectedValue: siteSurveyController.selectedControllerType,
+        items: siteSurveyController.controllerType,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedControllerType.value = newValue;
+            log('Selected Controller Type: ${siteSurveyController.selectedControllerType.value}');
+          } else {
+            log('No Controller Type selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 10,
       ),
-      const MyTextForm(labelText: 'Head of Pump (Meter)'),
-      const MyTextForm(labelText: 'Depth of Pump to be installed (ft.)'),
+      const MyTextForm(
+          keyboardType: TextInputType.number,
+          labelText: 'Head of Pump (Meter)'),
+      const MyTextForm(
+          keyboardType: TextInputType.number,
+          labelText: 'Depth of Pump to be installed (ft.)'),
     ],
   );
 }
@@ -305,66 +391,112 @@ Widget _otherDetails(BuildContext context) {
       const SizedBox(
         height: 15,
       ),
-      // CustomDropdown(
-      //   label: 'Irrigation Mode',
-      //   selectedValue: dropdownController.selectedDistrict,
-      //   items: dropdownController.districts,
-      //   onChanged: (newValue) => dropdownController.selectedDistrict(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Irrigation Mode',
+        selectedValue: siteSurveyController.selectedIrrigationMode,
+        items: siteSurveyController.irrigationMode,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedIrrigationMode.value = newValue;
+            log('Selected Integration Mode: ${siteSurveyController.selectedIrrigationMode.value}');
+          } else {
+            log('No Integration Mode selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Source of Water',
-      //   selectedValue: dropdownController.selectedTehsil,
-      //   items: dropdownController.tehsil,
-      //   onChanged: (newValue) => dropdownController.selectedTehsil(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Source of Water',
+        selectedValue: siteSurveyController.selectedSourceOfWater,
+        items: siteSurveyController.sourceOfWater,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedSourceOfWater.value = newValue;
+            log('Selected Source of Water: ${siteSurveyController.selectedSourceOfWater.value}');
+          } else {
+            log('No Source of Water selected');
+          }
+        },
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      const MyTextForm(
+          keyboardType: TextInputType.number,
+          labelText: 'Size of BoreWell (ft.)'),
+      const SizedBox(
+        height: 10,
+      ),
+      CustomDropdown(
+        label: 'Source of Power',
+        selectedValue: siteSurveyController.selectedSourceOfPower,
+        items: siteSurveyController.sourceOfPower,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedSourceOfPower.value = newValue;
+            log('Selected Source of Power: ${siteSurveyController.selectedSourceOfPower.value}');
+          } else {
+            log('No Source of Power selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Size of BoreWell (ft.)',
-      //   selectedValue: dropdownController.selectedVillage,
-      //   items: dropdownController.village,
-      //   onChanged: (newValue) => dropdownController.selectedVillage(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Having Electric Connection at Site?',
+        selectedValue: siteSurveyController.selectedHaveElectricConnection,
+        items: siteSurveyController.haveElectricConnection,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedHaveElectricConnection.value =
+                newValue;
+            log('Selected Electric Connection: ${siteSurveyController.selectedHaveElectricConnection.value}');
+          } else {
+            log('No Electric Connection selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Source of Power',
-      //   selectedValue: dropdownController.selectedBlock,
-      //   items: dropdownController.block,
-      //   onChanged: (newValue) => dropdownController.selectedBlock(newValue!),
-      // ),
+      CustomDropdown(
+        label: 'Is South Facing Shadow Free Land Available?',
+        selectedValue: siteSurveyController.selectedIsSouthFacingShadow,
+        items: siteSurveyController.isSouthFacingShadow,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedIsSouthFacingShadow.value = newValue;
+            log('Selected South Facing Shadow: ${siteSurveyController.selectedIsSouthFacingShadow.value}');
+          } else {
+            log('No South Facing Shadow selected');
+          }
+        },
+      ),
       const SizedBox(
         height: 20,
       ),
-      // CustomDropdown(
-      //   label: 'Having Electric Connection at Site?',
-      //   selectedValue: dropdownController.selectedBlock,
-      //   items: dropdownController.block,
-      //   onChanged: (newValue) => dropdownController.selectedBlock(newValue!),
-      // ),
-      const SizedBox(
-        height: 20,
+      CustomDropdown(
+        label: 'Is Site Suitable for Pump Installation?',
+        selectedValue: siteSurveyController.selectedIsSiteSuitableForPump,
+        items: siteSurveyController.isSiteSuitableForPump,
+        itemLabel: (pump) => pump.toString(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedIsSiteSuitableForPump.value = newValue;
+            log('Selected Suitable For Pump: ${siteSurveyController.selectedIsSiteSuitableForPump.value}');
+          } else {
+            log('No Suitable For Pump selected');
+          }
+        },
       ),
-      // CustomDropdown(
-      //   label: 'Is South Facing Shadow Free Land Available?',
-      //   selectedValue: dropdownController.selectedBlock,
-      //   items: dropdownController.block,
-      //   onChanged: (newValue) => dropdownController.selectedBlock(newValue!),
-      // ),
-      const SizedBox(
-        height: 20,
-      ),
-      // CustomDropdown(
-      //   label: 'Is Site Suitable for Pump Installation?',
-      //   selectedValue: dropdownController.selectedBlock,
-      //   items: dropdownController.block,
-      //   onChanged: (newValue) => dropdownController.selectedBlock(newValue!),
-      // ),
       const SizedBox(
         height: 10,
       ),
@@ -375,10 +507,12 @@ Widget _otherDetails(BuildContext context) {
 
 class DetailsContainer extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final List<Widget> children;
 
   const DetailsContainer({
     required this.title,
+    this.subtitle,
     required this.children,
     super.key,
   });
@@ -386,7 +520,10 @@ class DetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 10,
+      ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(10),
@@ -404,12 +541,20 @@ class DetailsContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.error, color: primaryColor),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8.0),
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(width: 8.0),
+              Flexible(
+                child: Text(
+                  subtitle ?? '',
+                  style: Theme.of(context).textTheme.titleLarge,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
             ],

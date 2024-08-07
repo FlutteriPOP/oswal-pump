@@ -6,15 +6,15 @@ import 'package:oswal/controller/search_controller.dart';
 
 import '../../theme/color.dart';
 import '../widgets/appbar_widget.dart';
-import 'installer_details.dart';
 import 'farmer_detail_page.dart';
+import 'installer_details.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController();
+    final controller = TextEditingController(text: 'SWPS/2023/24532');
     final searchBarController = Get.find<SearchBarController>();
     final theme = Theme.of(context);
 

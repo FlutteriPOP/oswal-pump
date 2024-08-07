@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:oswal/controller/device_storage_controller.dart';
-import 'package:oswal/model/block_model.dart';
-import 'package:oswal/model/tehsil_model.dart';
-import 'package:oswal/model/village_model.dart';
-import 'package:oswal/utils/apis.dart';
-import 'package:oswal/utils/const.dart';
 
+import '../model/block_model.dart';
 import '../model/district_model.dart';
+import '../model/tehsil_model.dart';
+import '../model/village_model.dart';
+import '../utils/apis.dart';
+import '../utils/const.dart';
+import 'device_storage_controller.dart';
 
 class SiteSurveyController extends GetxController {
   final DeviceController deviceController = Get.find();
@@ -18,6 +18,40 @@ class SiteSurveyController extends GetxController {
   var tehsilList = <Tehsil>[].obs;
   var blockList = <Block>[].obs;
   var villageList = <Village>[].obs;
+  var pumpType = <String>['AC', 'DC'].obs;
+  var pumpSubType = <String>['Submersible', 'Surface'].obs;
+  var pumpCapacity = <String>['1', '2', '3', '4', '5', '6', '7.5', '10'].obs;
+  var pumpCategory = <String>['WaterFilled', 'OilFilled'].obs;
+  var controllerType = <String>['Normal', 'USPC'].obs;
+  var irrigationMode =
+      <String>['UGPL', 'Sprinkler', 'Drip Irrigation', 'Open Irrigation'].obs;
+  var sourceOfWater = <String>[
+    'BoreWell',
+    'Pond',
+    'River',
+    'OpenWall',
+    'TubWell',
+    'Canal',
+    'Other'
+  ].obs;
+
+  var sourceOfPower = ['Diesel', 'Electric', 'Gen-Set', 'Canal', 'Other'].obs;
+  var haveElectricConnection = ['NotApplied', 'Yes', 'InProcess'].obs;
+  var isSouthFacingShadow = ['Yes', 'No'].obs;
+  var isSiteSuitableForPump = ['Yes', 'No'].obs;
+
+  var selectedPumpCategory = Rx<String?>(null);
+  var selectedPumpSubType = Rx<String?>(null);
+  var selectedPumpType = Rx<String?>(null);
+  var selectedPumpCapacity = Rx<String?>(null);
+  var selectedControllerType = Rx<String?>(null);
+  var selectedIrrigationMode = Rx<String?>(null);
+  var selectedSourceOfWater = Rx<String?>(null);
+  var selectedSourceOfPower = Rx<String?>(null);
+  var selectedHaveElectricConnection = Rx<String?>(null);
+  var selectedIsSouthFacingShadow = Rx<String?>(null);
+  var selectedIsSiteSuitableForPump = Rx<String?>(null);
+
   var selectedDistrict = Rxn<Datum>();
   var selectedTehsil = Rxn<Tehsil>();
   var selectedBlock = Rxn<Block>();
@@ -50,6 +84,10 @@ class SiteSurveyController extends GetxController {
     selectedBlock.value = null;
     villageList.clear();
     selectedVillage.value = null;
+  }
+
+  void clearBlock() {
+    selectedBlock.value = null;
   }
 
   void clearVillages() {

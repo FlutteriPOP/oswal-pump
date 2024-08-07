@@ -28,9 +28,9 @@ class TehsilModel {
 
 class Tehsil {
   Tehsil({
-    required this.tehsilId,
-    required this.tehsilCode,
-    required this.tehsilName,
+    this.tehsilId,
+    this.tehsilCode,
+    this.tehsilName,
   });
 
   final String? tehsilId;

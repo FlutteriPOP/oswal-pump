@@ -58,6 +58,13 @@ class IcPhotosPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             SitePhoto(
+              photoUrls: const [
+                'https://cdn2.thecatapi.com/images/2vr.jpg',
+                'https://cdn2.thecatapi.com/images/4gm.gif',
+                'https://cdn2.thecatapi.com/images/6lh.jpg',
+                'https://cdn2.thecatapi.com/images/73d.jpg',
+                'https://cdn2.thecatapi.com/images/cbj.jpg'
+              ],
               icon: Icons.camera_alt_rounded,
               title: 'Mounting Structure Picture',
               subtitle: '(Assembled Installed Structure Photo Without Panels)',
