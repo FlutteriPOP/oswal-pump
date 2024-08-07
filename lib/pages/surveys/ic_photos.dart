@@ -26,8 +26,15 @@ class IcPhotosPage extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomButton(
+                    child: Text(
+                      'Submit',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(color: Colors.white),
+                    ),
                     onPressed: () {
-                      log('Submitted');
+                      log('I&C Photos button Submitted');
                     },
                   ),
                 )

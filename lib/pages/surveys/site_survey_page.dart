@@ -163,7 +163,7 @@ Widget _locationDetails(BuildContext context) {
             siteSurveyController.selectedDistrict.value = newValue;
             siteSurveyController.clearDependentDropdowns();
             siteSurveyController.getTehsil(newValue.districtCode ?? '');
-            siteSurveyController.getBlock(newValue.districtCode ?? '');
+
             log('Selected district: ${newValue.districtName}');
           } else {
             siteSurveyController.clearDependentDropdowns();
@@ -181,34 +181,14 @@ Widget _locationDetails(BuildContext context) {
           if (newValue != null) {
             siteSurveyController.selectedTehsil.value = newValue;
             siteSurveyController.clearBlockAndVillage();
-            siteSurveyController.getBlock(
-                siteSurveyController.selectedDistrict.value?.districtCode ??
-                    '');
+            siteSurveyController.getVillage(
+                siteSurveyController.selectedDistrict.value?.districtCode ?? '',
+                siteSurveyController.selectedTehsil.value?.tehsilCode ?? '');
+
             log('Selected tehsil: ${newValue.tehsilName}');
           } else {
             siteSurveyController.clearBlockAndVillage();
             log('No tehsil selected');
-          }
-        },
-      ),
-      const SizedBox(height: 20),
-      CustomDropdown<Block>(
-        label: 'Select Block',
-        selectedValue: siteSurveyController.selectedBlock,
-        items: siteSurveyController.blockList,
-        itemLabel: (block) => block.blockName ?? 'Unknown',
-        onChanged: (Block? newValue) {
-          if (newValue != null) {
-            siteSurveyController.selectedBlock.value = newValue;
-            siteSurveyController.clearVillages();
-            siteSurveyController.getVillage(
-              siteSurveyController.selectedDistrict.value?.districtCode ?? '',
-              siteSurveyController.selectedTehsil.value?.tehsilCode ?? '',
-            );
-            log('Selected block: ${newValue.blockName}');
-          } else {
-            siteSurveyController.clearVillages();
-            log('No block selected');
           }
         },
       ),
@@ -221,10 +201,34 @@ Widget _locationDetails(BuildContext context) {
         onChanged: (Village? newValue) {
           if (newValue != null) {
             siteSurveyController.selectedVillage.value = newValue;
+            siteSurveyController.getBlock(
+                siteSurveyController.selectedDistrict.value?.districtCode ??
+                    '');
             log('Selected village: ${newValue.villageName}');
           } else {
             siteSurveyController.clearVillages();
             log('No village selected');
+          }
+        },
+      ),
+      const SizedBox(height: 20),
+      CustomDropdown<Block>(
+        label: 'Select Block',
+        selectedValue: siteSurveyController.selectedBlock,
+        items: siteSurveyController.blockList,
+        itemLabel: (block) => block.blockName ?? 'Unknown',
+        onChanged: (Block? newValue) {
+          if (newValue != null) {
+            siteSurveyController.selectedBlock.value = newValue;
+            // siteSurveyController.clearVillages();
+            // siteSurveyController.getVillage(
+            //   siteSurveyController.selectedDistrict.value?.districtCode ?? '',
+            //   siteSurveyController.selectedTehsil.value?.tehsilCode ?? '',
+            // );
+            log('Selected block: ${newValue.blockName}');
+          } else {
+            siteSurveyController.clearVillages();
+            log('No block selected');
           }
         },
       ),

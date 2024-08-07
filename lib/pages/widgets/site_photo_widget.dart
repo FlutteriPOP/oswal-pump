@@ -64,7 +64,7 @@ class SitePhoto extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
