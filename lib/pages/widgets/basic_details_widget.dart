@@ -5,10 +5,14 @@ import '../../controller/search_controller.dart';
 
 class BasicDetailsWidget extends StatelessWidget {
   final bool? isShow;
+  final bool? isShowsanctionName;
+  final bool? isShowSubmersible;
 
   const BasicDetailsWidget({
     super.key,
     this.isShow = false,
+    this.isShowsanctionName = false,
+    this.isShowSubmersible = false,
   });
 
   @override
@@ -50,12 +54,20 @@ class BasicDetailsWidget extends StatelessWidget {
               icon: Icons.phone_android_outlined,
               text: farmerDetail?.mobile ?? 'N/A',
             ),
-            _itemRow(
-              context,
-              icon: Icons.extension_sharp,
-              text:
-                  '${farmerDetail?.sanctionName ?? 'N/A'} (${farmerDetail?.sanctionYear ?? 'N/A'})',
-            ),
+            if (isShowsanctionName!)
+              _itemRow(
+                context,
+                icon: Icons.extension_sharp,
+                text:
+                    '${farmerDetail?.sanctionName ?? 'N/A'} (${farmerDetail?.sanctionYear ?? 'N/A'})',
+              ),
+            if (isShowSubmersible!)
+              _itemRow(
+                context,
+                icon: Icons.table_view_outlined,
+                text:
+                    '${farmerDetail?.pumpCapacity} HP ${farmerDetail?.pumpType}, ${farmerDetail?.pumpSubType}',
+              ),
           ],
         ),
       );

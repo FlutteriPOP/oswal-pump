@@ -12,7 +12,7 @@ class MyCircularProgressWidget extends StatelessWidget {
     this.size = 100.0,
     this.progressColor = primaryColor,
     this.assetImagePath = 'assets/images/icon.png',
-    this.loadingMessage = 'Loading...',
+    this.loadingMessage = 'Please Wait...',
   });
 
   @override
@@ -23,13 +23,15 @@ class MyCircularProgressWidget extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            SizedBox(
-              width: size + 2,
-              height: size + 2,
-              child: CircularProgressIndicator(
-                strokeWidth: 4.0,
-                backgroundColor: Colors.grey.withOpacity(0.2),
-                valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+            Center(
+              child: SizedBox(
+                width: size + 2,
+                height: size + 2,
+                child: CircularProgressIndicator(
+                  strokeWidth: 4.0,
+                  backgroundColor: Colors.grey.withOpacity(0.2),
+                  valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+                ),
               ),
             ),
             ClipOval(

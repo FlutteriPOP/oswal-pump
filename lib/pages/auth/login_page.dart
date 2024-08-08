@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oswal/controller/login_controller.dart';
-import 'package:oswal/pages/widgets/button_circuler_widget.dart';
+import 'package:oswal/pages/widgets/button_circular_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../utils/routs.dart';
@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         textColor: Theme.of(context).colorScheme.onPrimary,
         child: loginController.isLoading.value
-            ? const ButtonCirculerWidget()
+            ? const ButtonCircularWidget()
             : Text(
                 'Login',
                 style: TextStyle(

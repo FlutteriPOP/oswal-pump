@@ -12,7 +12,7 @@ import '../utils/const.dart';
 import 'device_storage_controller.dart';
 
 class SiteSurveyController extends GetxController {
-  final DeviceController deviceController = Get.find();
+  final DeviceStorageController deviceController = Get.find();
   var isLoading = false.obs;
   var districtList = <Datum>[].obs;
   var tehsilList = <Tehsil>[].obs;
@@ -112,7 +112,7 @@ class SiteSurveyController extends GetxController {
 
     try {
       final response = await dio.post(
-        ApiLinks.baseUrl + ApiLinks.getdistrict,
+        ApiLinks.baseUrl + ApiLinks.getDistrict,
         data: data,
       );
 
@@ -151,7 +151,7 @@ class SiteSurveyController extends GetxController {
 
     try {
       final response = await dio.post(
-        ApiLinks.baseUrl + ApiLinks.gettehsil,
+        ApiLinks.baseUrl + ApiLinks.getTehsil,
         data: data,
       );
 
@@ -190,7 +190,7 @@ class SiteSurveyController extends GetxController {
 
     try {
       final response = await dio.post(
-        ApiLinks.baseUrl + ApiLinks.getblock,
+        ApiLinks.baseUrl + ApiLinks.getBlock,
         data: data,
       );
 
@@ -230,7 +230,7 @@ class SiteSurveyController extends GetxController {
 
     try {
       final response = await dio.post(
-        ApiLinks.baseUrl + ApiLinks.getvillage,
+        ApiLinks.baseUrl + ApiLinks.getVillage,
         data: data,
       );
 

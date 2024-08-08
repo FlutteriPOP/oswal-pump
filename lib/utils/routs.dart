@@ -10,7 +10,7 @@ import '../pages/auth/forgot_page.dart';
 import '../pages/auth/login_page.dart';
 import '../pages/home_page.dart';
 import '../pages/surveys/asset_mapping.dart';
-import '../pages/surveys/dispatch.dart';
+import '../pages/surveys/dispatch_page.dart';
 import '../pages/surveys/ic_photos.dart';
 
 class AppRouts {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oswal/controller/dispatch_controller.dart';
 
 import '../controller/asset_mapping_controller.dart';
 import '../controller/getgodown_controller.dart';
@@ -25,6 +26,7 @@ class AllBinding extends Bindings {
 
     Get.lazyPut<GodownDetailController>(() => GodownDetailController(),
         fenix: true);
+    Get.lazyPut<DispatchController>(() => DispatchController(), fenix: true);
     Get.put<LocationController>(LocationController(), permanent: true);
   }
 }

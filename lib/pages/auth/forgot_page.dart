@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:oswal/controller/forgot_controller.dart';
 import 'package:oswal/pages/widgets/appbar_widget.dart';
 
-import '../widgets/button_circuler_widget.dart';
+import '../widgets/button_circular_widget.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/mytext_form.dart';
 
@@ -103,7 +103,7 @@ class ForgotPageState extends State<ForgotPage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         textColor: Theme.of(context).colorScheme.onPrimary,
         child: forgotController.isLoading.value
-            ? const ButtonCirculerWidget()
+            ? const ButtonCircularWidget()
             : Text(
                 'Submit',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(

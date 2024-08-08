@@ -8,7 +8,8 @@ class FirebaseApi {
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   Future<void> init() async {
-    DeviceController deviceController = Get.put(DeviceController());
+    DeviceStorageController deviceController =
+        Get.put(DeviceStorageController());
     log('Requesting notification permissions');
 
     NotificationSettings settings = await messaging.requestPermission(

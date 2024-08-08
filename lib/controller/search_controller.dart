@@ -10,25 +10,25 @@ import '../model/search_model.dart';
 import '../utils/apis.dart';
 
 class SearchBarController extends GetxController {
-  final DeviceController deviceController = Get.find();
+  final DeviceStorageController deviceController = Get.find();
   final searchText = ''.obs;
   final isLoading = false.obs;
   final searchResults = Rxn<FarmerDetailsModel>();
   Dio dio = Dio();
 
-  Timer? _debounce;
+  // Timer? _debounce;
 
-  void updateSearchText(String value) {
-    searchText.value = value;
-    _onSearchTextChanged(value);
-  }
+  // void updateSearchText(String value) {
+  //   searchText.value = value;
+  //   _onSearchTextChanged(value);
+  // }
 
-  void _onSearchTextChanged(String searchText) {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      searchFarmer(searchText: searchText);
-    });
-  }
+  // void _onSearchTextChanged(String searchText) {
+  //   if (_debounce?.isActive ?? false) _debounce?.cancel();
+  //   _debounce = Timer(const Duration(milliseconds: 500), () {
+  //     searchFarmer(searchText: searchText);
+  //   });
+  // }
 
   Future<void> searchFarmer({required String searchText}) async {
     deviceController.loadUserId();
@@ -49,13 +49,16 @@ class SearchBarController extends GetxController {
     try {
       isLoading(true);
       final response = await dio.post(
-        '${ApiLinks.baseUrl}${ApiLinks.searchfarmer}',
+        '${ApiLinks.baseUrl}${ApiLinks.searchFarmer}',
         data: data,
       );
 
       if (response.statusCode == 200) {
         final responseData = response.data;
-        log('Response: $responseData');
+        log('Response: ${responseData['data'][0]['farmer_id']}');
+        log('Response: ${responseData['data']}');
+
+        deviceController.saveFarmerId(responseData['data'][0]['farmer_id']);
 
         if (responseData['status'] == 'success') {
           final dataList = responseData['data'] as List<dynamic>;

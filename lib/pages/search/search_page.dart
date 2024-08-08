@@ -44,7 +44,8 @@ class SearchPage extends StatelessWidget {
                     onTap: () {
                       final searchText = controller.text.trim();
                       if (searchText.isNotEmpty) {
-                        searchBarController.updateSearchText(searchText);
+                        searchBarController.searchFarmer(
+                            searchText: searchText);
                       } else {
                         log('Search text is empty');
                         searchBarController.searchResults.value = null;

@@ -25,11 +25,7 @@ class SolarDetailPageState extends State<SolarDetailPage> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return Center(
-              child: MyCircularProgressWidget(
-            progressColor: Theme.of(context).primaryColor,
-            loadingMessage: 'Loading...',
-          ));
+          return const MyCircularProgressWidget();
         }
 
         if (controller.errorMessage.isNotEmpty) {

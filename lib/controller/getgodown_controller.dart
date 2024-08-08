@@ -7,7 +7,7 @@ import 'package:oswal/model/getgodown_model.dart';
 import 'package:oswal/utils/apis.dart';
 
 class GetgodownController extends GetxController {
-  final DeviceController deviceController = Get.find();
+  final DeviceStorageController deviceController = Get.find();
   final RxBool isLoading = false.obs;
   final RxList<GetGodownModel> godownData = <GetGodownModel>[].obs;
   Dio dio = Dio();

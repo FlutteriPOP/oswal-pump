@@ -9,7 +9,7 @@ import '../model/getdown_detail_model.dart';
 import 'device_storage_controller.dart';
 
 class GodownDetailController extends GetxController {
-  final DeviceController deviceController = Get.find();
+  final DeviceStorageController deviceController = Get.find();
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
 

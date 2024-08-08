@@ -1,12 +1,14 @@
 class ApiLinks {
   static const baseUrl = 'http://ipopsolution.com/site-survey-app/api/';
-  static const login = 'login';
+  static const logIn = 'login';
   static const forgetPass = 'forgotpassword';
   static const getGodown = 'getgodown';
-  static const searchfarmer = 'searchfarmer';
+  static const searchFarmer = 'searchfarmer';
   static const getGodownDetails = 'getgodowndetails';
-  static const getdistrict = 'getdistrict';
-  static const gettehsil = 'gettehsil';
-  static const getblock = 'getblock';
-  static const getvillage = 'getvillage';
+  static const getDistrict = 'getdistrict';
+  static const getTehsil = 'gettehsil';
+  static const getBlock = 'getblock';
+  static const getVillage = 'getvillage';
+  static const getAssetDispatch = 'getassetdispatch';
+  static const setAssetDispatch = 'setassetdispatch';
 }

@@ -9,7 +9,7 @@ import 'package:oswal/utils/routs.dart';
 import '../pages/widgets/tost_widget.dart';
 
 class LoginController extends GetxController {
-  final DeviceController deviceController = Get.find();
+  final DeviceStorageController deviceController = Get.find();
   final Dio dio = Dio();
   final RxBool isObscure = true.obs;
   final RxBool isLoading = false.obs;
@@ -34,7 +34,7 @@ class LoginController extends GetxController {
     try {
       isLoading.value = true;
       final response = await dio.post(
-        '${ApiLinks.baseUrl}${ApiLinks.login}',
+        '${ApiLinks.baseUrl}${ApiLinks.logIn}',
         data: data,
       );
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ButtonCirculerWidget extends StatelessWidget {
-  const ButtonCirculerWidget({super.key});
+class ButtonCircularWidget extends StatelessWidget {
+  const ButtonCircularWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

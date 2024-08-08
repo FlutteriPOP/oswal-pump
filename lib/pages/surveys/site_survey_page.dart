@@ -48,6 +48,7 @@ class SiteSurveyPage extends StatelessWidget {
             children: [
               const BasicDetailsWidget(
                 isShow: true,
+                isShowsanctionName: true,
               ),
               const SizedBox(height: 20),
               _locationDetails(context),

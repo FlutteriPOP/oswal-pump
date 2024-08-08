@@ -36,6 +36,7 @@ class _CameraPageState extends State<CameraPage> {
         _cameraController = CameraController(
           _cameras[_selectedCameraIndex],
           ResolutionPreset.high,
+          enableAudio: false,
         );
         await _cameraController!.initialize();
         if (!mounted) return;
