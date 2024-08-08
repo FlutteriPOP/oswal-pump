@@ -32,7 +32,9 @@ class DispatchPage extends StatelessWidget {
               dispatchController.dispatchData.value?.data[0].farmerAsset;
 
           if (dispatchData == null || dispatchData.isEmpty) {
-            return const Center(child: Text('No dispatch data available.'));
+            return const Center(
+                child: Text('No dispatch data available.',
+                    style: TextStyle(fontSize: 18)));
           }
 
           return SingleChildScrollView(

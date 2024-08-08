@@ -18,69 +18,86 @@ class SearchPage extends StatelessWidget {
     final searchBarController = Get.find<SearchBarController>();
     final theme = Theme.of(context);
 
+    // Method to handle refresh
+    Future<void> refresh() async {
+      log('Refreshing...');
+      final searchText = controller.text.trim();
+      if (searchText.isNotEmpty) {
+        await searchBarController.searchFarmer(searchText: searchText);
+      } else {
+        log('Search text is empty');
+        searchBarController.searchResults.value = null;
+      }
+    }
+
     return Scaffold(
       appBar: const AppbarWidget(title: 'Search'),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              TextFormField(
-                cursorColor: theme.colorScheme.onSurface,
-                controller: controller,
-                // onChanged: (text) {
-                //   searchBarController.updateSearchText(text);
-                // },
-                decoration: InputDecoration(
-                  hintText: 'Search Farmer: Mobile, APP No',
-                  hintStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  border: _outlineInputBorder(theme.colorScheme.onSurface),
-                  enabledBorder:
-                      _outlineInputBorder(theme.colorScheme.onSurface),
-                  focusedBorder:
-                      _outlineInputBorder(theme.colorScheme.onSurface),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      final searchText = controller.text.trim();
-                      if (searchText.isNotEmpty) {
-                        searchBarController.searchFarmer(
-                            searchText: searchText);
-                      } else {
-                        log('Search text is empty');
-                        searchBarController.searchResults.value = null;
-                      }
-                    },
-                    child: Container(
-                      height: 55,
-                      width: 65,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: theme.colorScheme.onSurface,
-                      ),
-                      child: const Icon(
-                        Icons.search,
-                        color: primaryColorLight,
-                        size: 30,
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: Obx(() {
+          if (searchBarController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      cursorColor: theme.colorScheme.onSurface,
+                      controller: controller,
+                      // onChanged: (text) {
+                      //   searchBarController.updateSearchText(text);
+                      // },
+                      decoration: InputDecoration(
+                        hintText: 'Search Farmer: Mobile, APP No',
+                        hintStyle:
+                            TextStyle(color: theme.colorScheme.onSurface),
+                        border:
+                            _outlineInputBorder(theme.colorScheme.onSurface),
+                        enabledBorder:
+                            _outlineInputBorder(theme.colorScheme.onSurface),
+                        focusedBorder:
+                            _outlineInputBorder(theme.colorScheme.onSurface),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            final searchText = controller.text.trim();
+                            if (searchText.isNotEmpty) {
+                              searchBarController.searchFarmer(
+                                  searchText: searchText);
+                            } else {
+                              log('Search text is empty');
+                              searchBarController.searchResults.value = null;
+                            }
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 65,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: theme.colorScheme.onSurface,
+                            ),
+                            child: const Icon(
+                              Icons.search,
+                              color: primaryColorLight,
+                              size: 30,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                    searchBarController.searchResults.value != null
+                        ? FarmerDetailPage()
+                        : const InstallerDetails(),
+                    const SizedBox(height: 20),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Obx(() {
-                if (searchBarController.isLoading.value) {
-                  return const CircularProgressIndicator();
-                } else if (searchBarController.searchResults.value != null) {
-                  return FarmerDetailPage();
-                } else {
-                  return const InstallerDetails();
-                }
-              }),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
+            );
+          }
+        }),
       ),
     );
   }

@@ -30,13 +30,7 @@ class FarmerDetailPage extends StatelessWidget {
         children: [
           _customContainerData(context, searchResults),
           const SizedBox(height: 20),
-          RefreshIndicator(
-            onRefresh: () async {
-              // Implement your refresh logic here
-              await Future.delayed(const Duration(seconds: 2));
-            },
-            child: _customContainerProcess(context),
-          ),
+          _customContainerProcess(context, searchResults),
         ],
       );
     });
@@ -115,7 +109,8 @@ class FarmerDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _customContainerProcess(BuildContext context) {
+  Widget _customContainerProcess(
+      BuildContext context, FarmerDetailsModel searchResults) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
@@ -134,6 +129,7 @@ class FarmerDetailPage extends StatelessWidget {
           _customSurvey(
             context,
             text: 'Site Survey',
+            isCompleted: searchResults.siteSurveyStatus,
             icon: Icons.pin_drop_sharp,
             color: primaryColorDark,
             color2: const Color.fromARGB(255, 190, 249, 218),
@@ -145,6 +141,7 @@ class FarmerDetailPage extends StatelessWidget {
           _customSurvey(
             context,
             text: 'Dispatch',
+            isCompleted: searchResults.dispatchStatus,
             icon: Icons.local_shipping,
             color: Colors.purple,
             color2: const Color.fromARGB(255, 249, 218, 255),
@@ -156,6 +153,7 @@ class FarmerDetailPage extends StatelessWidget {
           _customSurvey(
             context,
             text: 'Asset Mapping',
+            isCompleted: searchResults.assetMappingStatus,
             icon: Icons.qr_code_scanner_rounded,
             color: Colors.red,
             color2: const Color.fromARGB(255, 254, 202, 199),
@@ -167,6 +165,7 @@ class FarmerDetailPage extends StatelessWidget {
           _customSurvey(
             context,
             text: 'I&C Photos',
+            isCompleted: searchResults.iAndCStatus,
             icon: Icons.construction,
             color: const Color(0xffbf360c),
             color2: const Color(0xffffccbc),
@@ -185,6 +184,7 @@ class FarmerDetailPage extends StatelessWidget {
       required IconData icon,
       required Color color,
       required Color color2,
+      required String isCompleted,
       required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
@@ -206,6 +206,7 @@ class FarmerDetailPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             Icon(icon, color: color, size: 30),
             const SizedBox(width: 10),
             Text(
@@ -215,6 +216,9 @@ class FarmerDetailPage extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
             ),
+            const Spacer(),
+            if (isCompleted == '1')
+              Icon(Icons.check_circle, color: color, size: 30)
           ],
         ),
       ),
